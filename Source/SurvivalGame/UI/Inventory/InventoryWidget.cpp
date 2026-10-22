@@ -38,7 +38,7 @@ void UInventoryWidget::NativeConstruct()
 	}
 }
 
-void UInventoryWidget::ShowItemInfo(FItem ItemHovered, bool bShowAmount)
+void UInventoryWidget::ShowItemInfo(FItemData ItemHovered, bool bShowAmount)
 {
 	FFormatNamedArguments Args;
 	Args.Add(TEXT("Name"), FText::FromString(ItemHovered.Name));
@@ -74,7 +74,7 @@ void UInventoryWidget::TooltipPosition()
 	}
 }
 
-void UInventoryWidget::HandleSlotHovered(const FItem& ItemHovered)
+void UInventoryWidget::HandleSlotHovered(const FItemData& ItemHovered)
 {
 	ShowItemInfo(ItemHovered, true);
 }

@@ -2,15 +2,15 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
-#include "Item.generated.h"
+#include "ItemData.generated.h"
 
 USTRUCT(BlueprintType)
-struct FItem : public FTableRowBase
+struct FItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 	
-	FItem() = default;
-	FItem(const FString& InName, int32 InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft)
+	FItemData() = default;
+	FItemData(const FString& InName, int32 InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft)
 	   : Name(InName)
 	   , Amount(InAmount)
 	   , StaticMesh(InStaticMesh)

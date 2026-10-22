@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Runtime/UMG/Public/Blueprint/UserWidget.h"
-#include "../../Inventory/Item.h"
+#include "../../Inventory/ItemData.h"
 #include "ItemSlotWidget.generated.h"
 
 
@@ -11,7 +11,7 @@ class UTextBlock;
 class UImage;
 class UButton;
 
-DECLARE_DELEGATE_OneParam(FOnItemSlotHovered, const FItem&);
+DECLARE_DELEGATE_OneParam(FOnItemSlotHovered, const FItemData&);
 DECLARE_DELEGATE(FOnItemSlotUnhovered);
 
 UCLASS()
@@ -35,7 +35,7 @@ public:
 	TObjectPtr<UTextBlock> AmountText;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FItem Item;
+	FItemData Item;
 	
 private:
 	FTimerHandle StartDelayTimerHandle;

@@ -5,7 +5,7 @@
 #include "GameFramework/Character.h"
 #include "SurvivalCharacter.generated.h"
 
-struct FItem;
+struct FItemData;
 class UInventoryComponent;
 class UStatsComponent;
 struct FInputActionValue;
@@ -24,7 +24,7 @@ public:
 	
 	void StartSprint();
 	void StopSprint();
-	void EquipItemMesh(FItem ItemToEquip);
+	void EquipItemMesh(FItemData ItemToEquip);
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))

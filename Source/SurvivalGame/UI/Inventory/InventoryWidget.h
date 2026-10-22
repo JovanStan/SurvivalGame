@@ -7,7 +7,7 @@
 
 
 class UCanvasPanel;
-struct FItem;
+struct FItemData;
 class UTextBlock;
 class UItemSlotWidget;
 class UItemsGridWidget;
@@ -23,9 +23,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetSelected();
 	
-	void ShowItemInfo(FItem ItemHovered, bool bShowAmount);
+	void ShowItemInfo(FItemData ItemHovered, bool bShowAmount);
 	void HideItemInfo();
-	void HandleSlotHovered(const FItem& ItemHovered);
+	void HandleSlotHovered(const FItemData& ItemHovered);
 
 	
 	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)

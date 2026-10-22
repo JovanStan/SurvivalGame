@@ -70,7 +70,7 @@ void ASurvivalCharacter::DrainStamina()
 	}
 }
 
-void ASurvivalCharacter::EquipItemMesh(FItem ItemToEquip)
+void ASurvivalCharacter::EquipItemMesh(FItemData ItemToEquip)
 {
 	EquippedItemMesh->SetStaticMesh(ItemToEquip.StaticMesh);
 }

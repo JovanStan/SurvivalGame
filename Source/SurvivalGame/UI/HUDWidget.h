@@ -6,7 +6,7 @@
 #include "HUDWidget.generated.h"
 
 
-struct FItem;
+struct FItemData;
 class UTextBlock;
 class UImage;
 class UStatsWidget;
@@ -24,7 +24,7 @@ public:
 	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)
 	TObjectPtr<UTextBlock> EquippedItemText;
 	
-	void UpdateEquippedItem(FItem Item);
+	void UpdateEquippedItem(FItemData Item);
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void AddItemNotifications(const FString& ItemName, UTexture2D* ItemIcon, int32 ItemAmount);

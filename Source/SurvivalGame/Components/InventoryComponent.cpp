@@ -17,14 +17,14 @@ void UInventoryComponent::BeginPlay()
 	
 	SurvivalPlayerController = Cast<ASurvivalPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	
-	FItem Item("Wood", 3, nullptr, nullptr, false);
-	FItem Item2("Stone", 2, nullptr, nullptr, false);
+	FItemData Item("Wood", 3, nullptr, nullptr, false);
+	FItemData Item2("Stone", 2, nullptr, nullptr, false);
 	AddItem(Item);
 	AddItem(Item2);
 	//RemoveItem(Item, false);
 }
 
-void UInventoryComponent::AddItem(const FItem& NewItem)
+void UInventoryComponent::AddItem(const FItemData& NewItem)
 {
 	for (auto& Item : Items)
 	{
@@ -39,7 +39,7 @@ void UInventoryComponent::AddItem(const FItem& NewItem)
 	SurvivalPlayerController->GetHUDWidget()->AddItemNotifications(NewItem.Name, NewItem.Icon, NewItem.Amount);
 }
 
-bool UInventoryComponent::RemoveItem(const FItem& NewItem, bool bDecreaseOneOnly)
+bool UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly)
 {
 	for (auto& Item : Items)
 	{

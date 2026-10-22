@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "../Inventory/Item.h"
+#include "../Inventory/ItemData.h"
 #include "InventoryComponent.generated.h"
 
 
@@ -18,17 +18,17 @@ public:
 	UInventoryComponent();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
-	FItem EquippedItem;
+	FItemData EquippedItem;
 
 protected:
 	virtual void BeginPlay() override;
 	
-	void AddItem(const FItem& NewItem);
-	bool RemoveItem(const FItem& NewItem, bool bDecreaseOneOnly);
+	void AddItem(const FItemData& NewItem);
+	bool RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly);
 	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category = "Items")
-	TArray<FItem> Items;
+	TArray<FItemData> Items;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category = "Items")
 	TObjectPtr<UDataTable> ItemsDataTable;
 	
@@ -36,5 +36,5 @@ private:
 	TObjectPtr<ASurvivalPlayerController> SurvivalPlayerController;
 	
 public:
-	FORCEINLINE const TArray<FItem>& GetItems() const { return Items; }
+	FORCEINLINE const TArray<FItemData>& GetItems() const { return Items; }
 };
