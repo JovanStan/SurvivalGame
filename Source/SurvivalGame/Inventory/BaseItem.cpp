@@ -24,6 +24,14 @@ void ABaseItem::OnConstruction(const FTransform& Transform)
 	}
 }
 
+void ABaseItem::PickupItem_Implementation(FItemData& Item, bool& bCanPickup)
+{
+	IInteract::PickupItem_Implementation(Item, bCanPickup);
+	
+	Item = ItemData;
+	bCanPickup = true;
+}
+
 void ABaseItem::BeginPlay()
 {
 	Super::BeginPlay();

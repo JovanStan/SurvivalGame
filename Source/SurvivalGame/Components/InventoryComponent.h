@@ -19,13 +19,13 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
 	FItemData EquippedItem;
-
-protected:
-	virtual void BeginPlay() override;
 	
 	void AddItem(const FItemData& NewItem);
 	bool RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly);
-	
+
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"), Category = "Items")
 	TArray<FItemData> Items;

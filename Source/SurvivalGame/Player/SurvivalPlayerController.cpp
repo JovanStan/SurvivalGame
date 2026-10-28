@@ -14,6 +14,8 @@ void ASurvivalPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	OwnerCharacter = Cast<ASurvivalCharacter>(GetPawn());
+	
 	if (IsLocalController() && HUDWidgetClass)
 	{
 		HUDWidget = CreateWidget<UHUDWidget>(this, HUDWidgetClass);
@@ -48,6 +50,7 @@ void ASurvivalPlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ASurvivalPlayerController::StopSprint);
 		
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ASurvivalPlayerController::OpenInventory);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ASurvivalPlayerController::Interact);
 	}
 }
 
@@ -70,18 +73,12 @@ void ASurvivalPlayerController::StopJumping()
 
 void ASurvivalPlayerController::StartSprint()
 {
-	if (ASurvivalCharacter* OwnerCharacter = Cast<ASurvivalCharacter>(GetPawn()))
-	{
-		OwnerCharacter->StartSprint();
-	}
+	OwnerCharacter->StartSprint();
 }
 
 void ASurvivalPlayerController::StopSprint()
 {
-	if (ASurvivalCharacter* OwnerCharacter = Cast<ASurvivalCharacter>(GetPawn()))
-	{
-		OwnerCharacter->StopSprint();
-	}
+	OwnerCharacter->StopSprint();
 }
 
 void ASurvivalPlayerController::Move(const FInputActionValue& Value)
@@ -132,3 +129,8 @@ void ASurvivalPlayerController::CloseInventory()
 	SetInputMode(FInputModeGameOnly());
 	UGameplayStatics::PlaySound2D(this, CloseSound);
 }
+
+void ASurvivalPlayerController::Interact()
+{
+	OwnerCharacter->Interact();
+} 

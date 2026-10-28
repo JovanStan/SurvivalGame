@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "ItemData.h"
+#include "../Interfaces/Interact.h"
 #include "GameFramework/Actor.h"
 #include "BaseItem.generated.h"
 
@@ -10,7 +11,7 @@ class USphereComponent;
 struct FDataTableRowHandle;
 
 UCLASS()
-class SURVIVALGAME_API ABaseItem : public AActor
+class SURVIVALGAME_API ABaseItem : public AActor, public IInteract
 {
 	GENERATED_BODY()
 
@@ -18,8 +19,10 @@ public:
 	ABaseItem();
 	virtual void OnConstruction(const FTransform& Transform) override;
 	
+	virtual void PickupItem_Implementation(FItemData& Item, bool& bCanPickup) override;
+	
 protected:
-	virtual void BeginPlay() override;
+	virtual void BeginPlay() override; 
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))

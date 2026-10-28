@@ -31,7 +31,7 @@ void UInventoryComponent::AddItem(const FItemData& NewItem)
 		if (Item.Name == NewItem.Name)
 		{
 			Item.Amount += NewItem.Amount;
-			SurvivalPlayerController->GetHUDWidget()->AddItemNotifications(Item.Name, Item.Icon, Item.Amount);
+			SurvivalPlayerController->GetHUDWidget()->AddItemNotifications(Item.Name, Item.Icon, NewItem.Amount);
 			return;
 		}
 	}
@@ -48,7 +48,7 @@ bool UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOne
 		Item.Amount -= bDecreaseOneOnly ? 1 : NewItem.Amount;
 		if (Item.Amount <= 0)
 		{
-			const int32 Index = static_cast<int32>(&Item - Items.GetData());
+			const int Index = static_cast<int>(&Item - Items.GetData());
 			Items.RemoveAt(Index);
 			return true;
 		}

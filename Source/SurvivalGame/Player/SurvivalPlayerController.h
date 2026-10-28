@@ -5,6 +5,7 @@
 #include "GameFramework/PlayerController.h"
 #include "SurvivalPlayerController.generated.h"
 
+class ASurvivalCharacter;
 class UInventoryWidget;
 class UHUDWidget;
 class UInputMappingContext;
@@ -24,6 +25,9 @@ protected:
 	virtual void SetupInputComponent() override;
 	
 private:
+	UPROPERTY()
+	TObjectPtr<ASurvivalCharacter> OwnerCharacter;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TArray<TObjectPtr<UInputMappingContext>> InputMappingContexts;
 
@@ -37,6 +41,8 @@ private:
 	TObjectPtr<UInputAction> SprintAction;
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> InventoryAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> InteractAction;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TSubclassOf<UHUDWidget> HUDWidgetClass;
@@ -61,6 +67,7 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void OpenInventory();
+	void Interact();
 	
 public:
 	FORCEINLINE UInventoryWidget* GetInventoryWidget() const { return InventoryWidget; }

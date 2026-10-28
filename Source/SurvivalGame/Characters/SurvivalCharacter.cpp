@@ -7,6 +7,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Interfaces/Interact.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ASurvivalCharacter::ASurvivalCharacter()
@@ -42,7 +44,7 @@ ASurvivalCharacter::ASurvivalCharacter()
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Inventory Component");
 	
 	EquippedItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("Equipped Item Mesh");
-	EquippedItemMesh->SetupAttachment(GetMesh(), "hand_r");
+	EquippedItemMesh->SetupAttachment(GetMesh(), "EquippedItem");
 }
 
 void ASurvivalCharacter::StartSprint()
@@ -73,6 +75,48 @@ void ASurvivalCharacter::DrainStamina()
 void ASurvivalCharacter::EquipItemMesh(FItemData ItemToEquip)
 {
 	EquippedItemMesh->SetStaticMesh(ItemToEquip.StaticMesh);
+}
+
+void ASurvivalCharacter::Interact()
+{
+
+	FVector Start;
+	FRotator ViewRot;
+	GetController()->GetPlayerViewPoint(Start, ViewRot);
+
+	const FVector End = Start + ViewRot.Vector() * 250.f;
+	FHitResult HitResult;
+	
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
+	
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+	
+	UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), Start, 
+		End, 20.f, ObjectTypes, 
+		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true);
+	
+	if (HitResult.bBlockingHit)
+	{
+		if (HitResult.GetActor()->Implements<UInteract>())
+		{
+			FItemData PickedItem;
+			bool bCanPickup = false;
+			IInteract::Execute_PickupItem(HitResult.GetActor(), PickedItem, bCanPickup);
+			
+			if (bCanPickup)
+			{
+				InventoryComponent->AddItem(PickedItem);
+				HitResult.GetActor()->Destroy();
+			}
+		}
+	}
+}
+
+void ASurvivalCharacter::HarvestItem_Implementation(FItemData Item)
+{
+	InventoryComponent->AddItem(Item);
 }
 
 

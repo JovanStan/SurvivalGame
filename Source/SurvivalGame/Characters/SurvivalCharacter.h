@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/InventoryInterface.h"
 #include "SurvivalCharacter.generated.h"
 
 struct FItemData;
@@ -14,7 +15,7 @@ class USpringArmComponent;
 class UInputAction;
 
 UCLASS()
-class SURVIVALGAME_API ASurvivalCharacter : public ACharacter
+class SURVIVALGAME_API ASurvivalCharacter : public ACharacter, public IInventoryInterface
 {
 	GENERATED_BODY()
 	
@@ -25,6 +26,9 @@ public:
 	void StartSprint();
 	void StopSprint();
 	void EquipItemMesh(FItemData ItemToEquip);
+	void Interact();
+	
+	virtual void HarvestItem_Implementation(FItemData Item) override;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))

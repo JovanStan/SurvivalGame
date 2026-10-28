@@ -10,7 +10,7 @@ struct FItemData : public FTableRowBase
 	GENERATED_BODY()
 	
 	FItemData() = default;
-	FItemData(const FString& InName, int32 InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft)
+	FItemData(const FString& InName, int InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft)
 	   : Name(InName)
 	   , Amount(InAmount)
 	   , StaticMesh(InStaticMesh)
@@ -21,7 +21,7 @@ struct FItemData : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FString Name = FString();
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	int32 Amount = 0;
+	int Amount = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UStaticMesh> StaticMesh = nullptr;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
