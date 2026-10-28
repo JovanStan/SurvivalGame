@@ -5,10 +5,11 @@
 #include "../UI/StatsWidget.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/ItemActionComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Helper/CommonFunctions.h"
 #include "Interfaces/Interact.h"
-#include "Kismet/GameplayStatics.h"
 
 
 ASurvivalCharacter::ASurvivalCharacter()
@@ -42,6 +43,7 @@ ASurvivalCharacter::ASurvivalCharacter()
 	
 	StatsComponent = CreateDefaultSubobject<UStatsComponent>("Stats Component");
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Inventory Component");
+	ItemActionComponent = CreateDefaultSubobject<UItemActionComponent>("Item Action Component");
 	
 	EquippedItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("Equipped Item Mesh");
 	EquippedItemMesh->SetupAttachment(GetMesh(), "EquippedItem");
@@ -79,23 +81,11 @@ void ASurvivalCharacter::EquipItemMesh(FItemData ItemToEquip)
 
 void ASurvivalCharacter::Interact()
 {
-
-	FVector Start;
-	FRotator ViewRot;
-	GetController()->GetPlayerViewPoint(Start, ViewRot);
-
-	const FVector End = Start + ViewRot.Vector() * 250.f;
 	FHitResult HitResult;
-	
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
 	
-	TArray<AActor*> ActorsToIgnore;
-	ActorsToIgnore.Add(this);
-	
-	UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), Start, 
-		End, 20.f, ObjectTypes, 
-		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true);
+	if (!UCommonFunctions::DoSphereTraceForObjects(this, ObjectTypes, HitResult)) return;
 	
 	if (HitResult.bBlockingHit)
 	{

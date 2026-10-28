@@ -43,6 +43,8 @@ private:
 	TObjectPtr<UInputAction> InventoryAction;
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UInputAction> InteractAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UInputAction> AttackAndHarvestAction;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TSubclassOf<UHUDWidget> HUDWidgetClass;
@@ -68,6 +70,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 	void OpenInventory();
 	void Interact();
+	void AttackAndHarvest();
 	
 public:
 	FORCEINLINE UInventoryWidget* GetInventoryWidget() const { return InventoryWidget; }

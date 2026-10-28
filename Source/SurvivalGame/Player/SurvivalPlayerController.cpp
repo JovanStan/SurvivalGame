@@ -6,6 +6,7 @@
 #include "../Characters/SurvivalCharacter.h"
 #include "../UI/HUDWidget.h"
 #include "../UI/Inventory/InventoryWidget.h"
+#include "Components/ItemActionComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -51,6 +52,7 @@ void ASurvivalPlayerController::SetupInputComponent()
 		
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ASurvivalPlayerController::OpenInventory);
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ASurvivalPlayerController::Interact);
+		EnhancedInputComponent->BindAction(AttackAndHarvestAction, ETriggerEvent::Started, this, &ASurvivalPlayerController::AttackAndHarvest);
 	}
 }
 
@@ -133,4 +135,9 @@ void ASurvivalPlayerController::CloseInventory()
 void ASurvivalPlayerController::Interact()
 {
 	OwnerCharacter->Interact();
+}
+
+void ASurvivalPlayerController::AttackAndHarvest()
+{
+	OwnerCharacter->GetItemActionComponent()->AttackAndHarvest();
 } 

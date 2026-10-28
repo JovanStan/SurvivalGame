@@ -23,7 +23,13 @@ float AResource::TakeDamage(float DamageAmount, struct FDamageEvent const& Damag
 		{
 			FItemData Item = *Row;
 			Item.Amount = FMath::RandRange(2, 5);   
+			Health -= DamageAmount;
 			IInventoryInterface::Execute_HarvestItem(DamageCauser, Item);
+			
+			if (Health <= 0)
+			{
+				Destroy();
+			}
 		}
 	}
 	return Result;

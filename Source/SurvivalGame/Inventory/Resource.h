@@ -24,5 +24,5 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TArray<FDataTableRowHandle> Items;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	float Health = 5.f;
+	float Health = 100.f;
 };

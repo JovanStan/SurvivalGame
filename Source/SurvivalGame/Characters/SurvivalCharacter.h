@@ -6,6 +6,7 @@
 #include "Interfaces/InventoryInterface.h"
 #include "SurvivalCharacter.generated.h"
 
+class UItemActionComponent;
 struct FItemData;
 class UInventoryComponent;
 class UStatsComponent;
@@ -39,6 +40,8 @@ private:
 	TObjectPtr<UStatsComponent> StatsComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInventoryComponent> InventoryComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UItemActionComponent> ItemActionComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> EquippedItemMesh;
@@ -60,8 +63,10 @@ public:
 	FORCEINLINE USoundBase* GetDamageSound() const { return DamageSound; }
 	FORCEINLINE float GetDamageSoundCooldown() const { return DamageSoundCooldown; }
 	FORCEINLINE float GetLastDamageSoundTime() const { return LastDamageSoundTime; }
+	
 	FORCEINLINE UStatsComponent* GetStatsComponent() const { return StatsComponent; }
 	FORCEINLINE UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+	FORCEINLINE UItemActionComponent* GetItemActionComponent() const { return ItemActionComponent; }
 	
 	void SetLastDamageSoundTime(float Time) { LastDamageSoundTime = Time; }
 };
