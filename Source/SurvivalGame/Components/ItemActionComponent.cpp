@@ -3,6 +3,7 @@
 
 #include "../Characters/SurvivalCharacter.h"
 #include "../Helper/CommonFunctions.h"
+#include "../Interfaces/FoliageInterface.h"
 #include "../Player/SurvivalPlayerController.h"
 #include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
@@ -65,6 +66,10 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 		const FDamageEvent DamageEvent;
 		HitResult.GetActor()->TakeDamage(10.f, DamageEvent, SurvivalPlayerController, SurvivalCharacter);
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, HitResult.ImpactPoint);
+		if (HitResult.GetComponent()->Implements<UFoliageInterface>())
+		{
+			IFoliageInterface::Execute_Chop(HitResult.GetComponent(), 10.f, HitResult);
+		}
 	}
 }
 

@@ -20,7 +20,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
 	FItemData EquippedItem;
 	
+	UFUNCTION(BlueprintCallable)
 	void AddItem(const FItemData& NewItem);
+	UFUNCTION(BlueprintCallable)
 	bool RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly);
 
 protected:

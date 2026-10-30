@@ -16,12 +16,7 @@ void UInventoryComponent::BeginPlay()
 	Super::BeginPlay();
 	
 	SurvivalPlayerController = Cast<ASurvivalPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	
-	FItemData Item("Wood", 3, nullptr, nullptr, false);
-	FItemData Item2("Stone", 2, nullptr, nullptr, false);
-	AddItem(Item);
-	AddItem(Item2);
-	//RemoveItem(Item, false);
+
 }
 
 void UInventoryComponent::AddItem(const FItemData& NewItem)
