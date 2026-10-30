@@ -6,6 +6,7 @@
 #include "ItemActionComponent.generated.h"
 
 
+class UNiagaraSystem;
 class UInventoryWidget;
 class ASurvivalPlayerController;
 class UInventoryComponent;
@@ -28,6 +29,8 @@ private:
 	TObjectPtr<UAnimMontage> AttackAndHarvestMontage;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<USoundBase> HitSound;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> HitEffect;
 	
 	void OnAttackAndHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	UFUNCTION()
@@ -38,11 +41,8 @@ private:
 	UPROPERTY()
 	TObjectPtr<UAnimInstance> AnimInstance;
 	UPROPERTY()
-	TObjectPtr<ASurvivalPlayerController> SurvivalPlayerController;
-	UPROPERTY()
 	TObjectPtr<UInventoryComponent> InventoryComponent;
-	UPROPERTY()
-	TObjectPtr<UInventoryWidget> InventoryWidget;
+	
 	
 	bool bCanAttack;
 };

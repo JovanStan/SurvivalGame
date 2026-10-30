@@ -1,12 +1,13 @@
 ﻿
 #include "ItemActionComponent.h"
-
+#include "InventoryComponent.h"
 #include "../Characters/SurvivalCharacter.h"
 #include "../Helper/CommonFunctions.h"
 #include "../Interfaces/FoliageInterface.h"
 #include "../Player/SurvivalPlayerController.h"
 #include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
 
 UItemActionComponent::UItemActionComponent()
 {
@@ -22,8 +23,6 @@ void UItemActionComponent::BeginPlay()
 	SurvivalCharacter = Cast<ASurvivalCharacter>(GetOwner());
 	AnimInstance = SurvivalCharacter->GetMesh()->GetAnimInstance();
 	InventoryComponent = SurvivalCharacter->GetInventoryComponent();
-	SurvivalPlayerController = Cast<ASurvivalPlayerController>(SurvivalCharacter->GetController());
-	InventoryWidget = SurvivalPlayerController->GetInventoryWidget();
 	
 	if (AnimInstance)
 	{
@@ -33,17 +32,20 @@ void UItemActionComponent::BeginPlay()
 
 void UItemActionComponent::AttackAndHarvest()
 {
-	if (InventoryWidget) return;
+	const ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(SurvivalCharacter->GetController());
+	if (!PC || PC->GetInventoryWidget()) return;
 	
-	if (bCanAttack && SurvivalCharacter && AttackAndHarvestMontage)
+	if (InventoryComponent->EquippedItem.Name == "Axe" || InventoryComponent->EquippedItem.Name == "Pickaxe")
 	{
-		AnimInstance->Montage_Play(AttackAndHarvestMontage);
-		bCanAttack = false;
+		if (bCanAttack && SurvivalCharacter && AttackAndHarvestMontage)
+		{
+			AnimInstance->Montage_Play(AttackAndHarvestMontage);
+			bCanAttack = false;
 		
-		
-		FOnMontageEnded EndDelegate;
-		EndDelegate.BindUObject(this, &ThisClass::OnAttackAndHarvestMontageEnded);
-		SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, AttackAndHarvestMontage);
+			FOnMontageEnded EndDelegate;
+			EndDelegate.BindUObject(this, &ThisClass::OnAttackAndHarvestMontageEnded);
+			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, AttackAndHarvestMontage);
+		}
 	}
 }
 
@@ -63,12 +65,19 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 	
 	if (HitResult.bBlockingHit)
 	{
-		const FDamageEvent DamageEvent;
-		HitResult.GetActor()->TakeDamage(10.f, DamageEvent, SurvivalPlayerController, SurvivalCharacter);
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, HitResult.ImpactPoint);
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, HitResult.ImpactPoint);
+		
 		if (HitResult.GetComponent()->Implements<UFoliageInterface>())
 		{
 			IFoliageInterface::Execute_Chop(HitResult.GetComponent(), 10.f, HitResult);
+			return;
+		}
+		
+		if (HitResult.GetActor())
+		{
+			const FDamageEvent DamageEvent;
+			HitResult.GetActor()->TakeDamage(10.f, DamageEvent, SurvivalCharacter->GetController(), SurvivalCharacter);
 		}
 	}
 }

@@ -19,26 +19,14 @@ public class SurvivalGame : ModuleRules
 			"GameplayStateTreeModule",
 			"UMG",
 			"Slate",
-			"SlateCore"
+			"SlateCore",
+			"Niagara"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
 		PublicIncludePaths.AddRange(new string[] {
-			"SurvivalGame",
-			"SurvivalGame/Variant_Platforming",
-			"SurvivalGame/Variant_Platforming/Animation",
-			"SurvivalGame/Variant_Combat",
-			"SurvivalGame/Variant_Combat/AI",
-			"SurvivalGame/Variant_Combat/Animation",
-			"SurvivalGame/Variant_Combat/Gameplay",
-			"SurvivalGame/Variant_Combat/Interfaces",
-			"SurvivalGame/Variant_Combat/UI",
-			"SurvivalGame/Variant_SideScrolling",
-			"SurvivalGame/Variant_SideScrolling/AI",
-			"SurvivalGame/Variant_SideScrolling/Gameplay",
-			"SurvivalGame/Variant_SideScrolling/Interfaces",
-			"SurvivalGame/Variant_SideScrolling/UI"
+			"SurvivalGame"
 		});
 
 		// Uncomment if you are using Slate UI

@@ -115,6 +115,8 @@ void ASurvivalPlayerController::OpenInventory()
 		InventoryWidget->AddToViewport();
 		SetShowMouseCursor(true);
 		SetInputMode(FInputModeGameAndUI());
+		SetIgnoreLookInput(true);
+		SetIgnoreMoveInput(true);
 		UGameplayStatics::PlaySound2D(this, OpenSound);
 	}
 	else
@@ -129,6 +131,8 @@ void ASurvivalPlayerController::CloseInventory()
 	InventoryWidget = nullptr;
 	SetShowMouseCursor(false);
 	SetInputMode(FInputModeGameOnly());
+	SetIgnoreLookInput(false);
+	SetIgnoreMoveInput(false);
 	UGameplayStatics::PlaySound2D(this, CloseSound);
 }
 

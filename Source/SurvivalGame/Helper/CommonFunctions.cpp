@@ -19,5 +19,5 @@ bool UCommonFunctions::DoSphereTraceForObjects(ASurvivalCharacter* SurvivalChara
 	
 	return UKismetSystemLibrary::SphereTraceSingleForObjects(SurvivalCharacter, Start, 
 		End, 20.f, ObjectTypes, 
-		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true);
+		false, ActorsToIgnore, EDrawDebugTrace::None, HitResult, true);
 }

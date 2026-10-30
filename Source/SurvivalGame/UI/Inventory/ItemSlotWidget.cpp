@@ -40,6 +40,7 @@ void UItemSlotWidget::OnItemButtonPressed()
 	if (ASurvivalCharacter* PlayerCharacter = Cast<ASurvivalCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 	{
 		PlayerCharacter->GetInventoryComponent()->EquippedItem = Item;
+		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, FString::Printf(TEXT("Equipped %s"), *Item.Name));
 		PlayerCharacter->EquipItemMesh(Item);
 		SetSelected();
 		if (ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(PlayerCharacter->GetController()))
