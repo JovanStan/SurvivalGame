@@ -25,7 +25,7 @@ void UItemSlotWidget::StartDelay()
 {
 	if (AmountText)
 	{
-		AmountText->SetText(FText::FromString(Item.Name));
+		AmountText->SetText(FText::AsNumber(Item.Amount));
 	}
 	
 	if (IconImage)

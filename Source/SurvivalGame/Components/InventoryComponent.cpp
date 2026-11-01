@@ -18,6 +18,27 @@ void UInventoryComponent::BeginPlay()
 
 }
 
+bool UInventoryComponent::CanCraftItem(FItemData ItemData)
+{
+	for (FRecipe Resource : ItemData.ResourcesNeeded)
+	{
+		FItemData* Row = Resource.Item.GetRow<FItemData>(TEXT("CanCraftItem"));
+		if (!Row) return false;
+		
+		bool bHasEnough = false;
+		for (auto& Item : Items)
+		{
+			if (Item.Name == Row->Name && Item.Amount >= Resource.Amount)
+			{
+				bHasEnough = true;
+				break;
+			}
+		}
+		if (!bHasEnough) return false;
+	}
+	return true;
+}
+
 void UInventoryComponent::AddItem(const FItemData& NewItem)
 {
 	for (auto& Item : Items)
@@ -33,7 +54,7 @@ void UInventoryComponent::AddItem(const FItemData& NewItem)
 	SurvivalPlayerController->GetHUDWidget()->AddItemNotifications(NewItem.Name, NewItem.Icon, NewItem.Amount);
 }
 
-bool UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly)
+void UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly)
 {
 	for (auto& Item : Items)
 	{
@@ -44,10 +65,8 @@ bool UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOne
 		{
 			const int Index = static_cast<int>(&Item - Items.GetData());
 			Items.RemoveAt(Index);
-			return true;
 		}
-		return false;
+		return;
 	}
-	return false;
 }
 

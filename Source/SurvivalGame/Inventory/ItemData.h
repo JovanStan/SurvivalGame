@@ -1,8 +1,10 @@
 ﻿
 #pragma once
 #include "CoreMinimal.h"
+#include "Crafting/Recipe.h"
 #include "Engine/DataTable.h"
 #include "ItemData.generated.h"
+
 
 USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase
@@ -28,4 +30,6 @@ struct FItemData : public FTableRowBase
 	TObjectPtr<UTexture2D> Icon = nullptr;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bCanCraft = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FRecipe> ResourcesNeeded;
 };
