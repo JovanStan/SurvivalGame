@@ -18,6 +18,15 @@ void UCraftingSlot::NativeConstruct()
 	GetWorld()->GetTimerManager().SetTimer(StartDelayTimerHandle, this, &UCraftingSlot::StartDelay, 0.1f, false);
 }
 
+void UCraftingSlot::SetCraftingItem(const FItemData& NewItem)
+{
+	Item = NewItem;
+	if (IconImage)
+	{
+		IconImage->SetBrushFromTexture(Item.Icon);
+	}
+}
+
 void UCraftingSlot::StartDelay()
 {
 	if (IconImage)

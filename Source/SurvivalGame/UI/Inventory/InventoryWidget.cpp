@@ -76,8 +76,7 @@ void UInventoryWidget::UpdateInventory()
 			UItemSlotWidget* ItemSlot = CreateWidget<UItemSlotWidget>(this, ItemSlotClass);
 			const int32 Row = Index / SlotsPerRow;
 			const int32 Column = Index % SlotsPerRow;
-			ItemSlot->Item = Item;
-			
+			ItemSlot->SetItem(Item, Item.Amount);
 			ItemSlot->OnSlotHovered.BindUObject(this, &ThisClass::HandleSlotHovered);
 			ItemSlot->OnSlotUnhovered.BindUObject(this, &ThisClass::HideItemInfo);
 			
@@ -106,9 +105,9 @@ void UInventoryWidget::UpdateInventory()
 			for (auto& Item : CraftableItemsList)
 			{
 				UCraftingSlot* CraftingSlot = CreateWidget<UCraftingSlot>(this, CraftingSlotClass);
-				CraftingSlot->Item = Item;
-				const int32 Row = Index2 / SlotsPerRow;
-				const int32 Column = Index2 % SlotsPerRow;
+				CraftingSlot->SetCraftingItem(Item);
+				const int32 Row = Index2 / 4;
+				const int32 Column = Index2 % 4;
 				CraftItemsGrid->GridPanel->AddChildToUniformGrid(CraftingSlot, Row, Column);
 				++Index2;
 			}
@@ -139,6 +138,7 @@ void UInventoryWidget::DisplayCraftingResources(TArray<FRecipe> Resources, FItem
 	ItemToCraftSelected = ItemToCraft;
 	CraftButton->SetVisibility(ESlateVisibility::Visible);
 	CraftingWidget->SetVisibility(ESlateVisibility::Visible);
+	RecipeText->SetVisibility(ESlateVisibility::Visible);
 }
 
 void UInventoryWidget::CraftButtonPressed()

@@ -21,6 +21,20 @@ void UItemSlotWidget::NativeConstruct()
 	GetWorld()->GetTimerManager().SetTimer(StartDelayTimerHandle, this, &UItemSlotWidget::StartDelay, 0.1f, false);
 }
 
+void UItemSlotWidget::SetItem(const FItemData& NewItem, int32 Amount)
+{
+	Item = NewItem;
+	Item.Amount = Amount;
+	if (IconImage)
+	{
+		IconImage->SetBrushFromTexture(Item.Icon);
+	}
+	if (AmountText)
+	{
+		AmountText->SetText(FText::AsNumber(Amount));
+	}
+}
+
 void UItemSlotWidget::StartDelay()
 {
 	if (AmountText)

@@ -37,6 +37,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FItemData Item;
 	
+	void SetItem(const FItemData& NewItem, int32 Amount);
+	
 private:
 	FTimerHandle StartDelayTimerHandle;
 	UFUNCTION()

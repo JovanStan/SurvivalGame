@@ -46,6 +46,8 @@ public:
 	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)
 	TObjectPtr<UCraftingWidget> CraftingWidget;
 	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)
+	TObjectPtr<UTextBlock> RecipeText;
+	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)
 	TObjectPtr<UButton> CraftButton;
 	
 	

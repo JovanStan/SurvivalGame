@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ItemActionComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Helper/CommonFunctions.h"
@@ -47,6 +48,9 @@ ASurvivalCharacter::ASurvivalCharacter()
 	
 	EquippedItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("Equipped Item Mesh");
 	EquippedItemMesh->SetupAttachment(GetMesh(), "EquippedItem");
+	
+	CharacterViewport = CreateDefaultSubobject<USceneCaptureComponent2D>("Character Viewport");
+	CharacterViewport->SetupAttachment(GetCapsuleComponent());
 }
 
 void ASurvivalCharacter::StartSprint()
@@ -107,6 +111,13 @@ void ASurvivalCharacter::Interact()
 void ASurvivalCharacter::HarvestItem_Implementation(FItemData Item)
 {
 	InventoryComponent->AddItem(Item);
+}
+
+void ASurvivalCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	CharacterViewport->ShowOnlyActorComponents(this, true);
 }
 
 

@@ -28,6 +28,8 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FItemData Item;
+	
+	void SetCraftingItem(const FItemData& NewItem);
 
 private:
 	FTimerHandle StartDelayTimerHandle;

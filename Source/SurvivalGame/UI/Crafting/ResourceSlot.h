@@ -19,8 +19,6 @@ class SURVIVALGAME_API UResourceSlot : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 	UPROPERTY(meta=(BindWidget))
-	TObjectPtr<UButton> ItemButton;
-	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UImage> IconImage;
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> AmountText;
