@@ -4,6 +4,7 @@
 #include "../Components/StatsComponent.h"
 #include "../UI/StatsWidget.h"
 #include "Camera/CameraComponent.h"
+#include "Components/BuildingComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ItemActionComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
@@ -45,6 +46,7 @@ ASurvivalCharacter::ASurvivalCharacter()
 	StatsComponent = CreateDefaultSubobject<UStatsComponent>("Stats Component");
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("Inventory Component");
 	ItemActionComponent = CreateDefaultSubobject<UItemActionComponent>("Item Action Component");
+	BuildingComponent = CreateDefaultSubobject<UBuildingComponent>("Building Component");
 	
 	EquippedItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("Equipped Item Mesh");
 	EquippedItemMesh->SetupAttachment(GetMesh(), "EquippedItem");

@@ -6,6 +6,7 @@
 #include "../Characters/SurvivalCharacter.h"
 #include "../UI/HUDWidget.h"
 #include "../UI/Inventory/InventoryWidget.h"
+#include "Components/BuildingComponent.h"
 #include "Components/ItemActionComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
@@ -143,5 +144,12 @@ void ASurvivalPlayerController::Interact()
 
 void ASurvivalPlayerController::AttackAndHarvest()
 {
-	OwnerCharacter->GetItemActionComponent()->AttackAndHarvest();
+	if (OwnerCharacter->GetBuildingComponent()->GetInBuildMode())
+	{
+		OwnerCharacter->GetBuildingComponent()->Build();
+	}
+	else
+	{
+		OwnerCharacter->GetItemActionComponent()->AttackAndHarvest();
+	}
 } 
