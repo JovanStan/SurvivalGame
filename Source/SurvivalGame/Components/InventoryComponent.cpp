@@ -3,7 +3,9 @@
 
 #include "../Player/SurvivalPlayerController.h"
 #include "../UI/HUDWidget.h"
+#include "Crafting/Recipe.h"
 #include "Kismet/GameplayStatics.h"
+
 
 UInventoryComponent::UInventoryComponent()
 {
@@ -69,4 +71,14 @@ void UInventoryComponent::RemoveItem(const FItemData& NewItem, bool bDecreaseOne
 		return;
 	}
 }
+
+int UInventoryComponent::GetItemAmount(const FItemData& ItemData)
+{
+	for (const FItemData& Item : Items)
+	{
+		if (Item.Name == ItemData.Name) return Item.Amount;
+	}
+	return 0;
+}
+
 

@@ -23,6 +23,8 @@ public:
 	float UpOffset = 20.f;
 	
 	void Build();
+	void BuildMode();
+	void StopBuildMode();
 
 protected:
 	virtual void BeginPlay() override;
@@ -42,9 +44,7 @@ private:
 	TObjectPtr<ASurvivalCharacter> SurvivalCharacter;
 	UPROPERTY()
 	UStaticMeshComponent* BuildPreviewMesh;
-	
-	void BuildMode();
-	void StopBuildMode();
+
 	
 public:
 	FORCEINLINE bool GetInBuildMode() const { return bInBuildMode; }

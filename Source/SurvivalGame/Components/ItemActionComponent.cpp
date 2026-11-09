@@ -1,5 +1,7 @@
 ﻿
 #include "ItemActionComponent.h"
+
+#include "BuildingComponent.h"
 #include "InventoryComponent.h"
 #include "../Characters/SurvivalCharacter.h"
 #include "../Helper/CommonFunctions.h"
@@ -23,6 +25,7 @@ void UItemActionComponent::BeginPlay()
 	SurvivalCharacter = Cast<ASurvivalCharacter>(GetOwner());
 	AnimInstance = SurvivalCharacter->GetMesh()->GetAnimInstance();
 	InventoryComponent = SurvivalCharacter->GetInventoryComponent();
+	BuildingComponent = SurvivalCharacter->GetBuildingComponent();
 	
 	if (AnimInstance)
 	{

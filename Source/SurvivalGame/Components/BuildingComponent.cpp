@@ -16,7 +16,6 @@ void UBuildingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	SurvivalCharacter = Cast<ASurvivalCharacter>(GetOwner());
-	BuildMode();
 }
 
 void UBuildingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -71,7 +70,7 @@ void UBuildingComponent::BuildMode()
 	if (!Inv) return;
 
 	BuildPart.DataTable = BuildPartsDataTable;
-	//BuildPart.RowName = FName(*Inv->EquippedItem.Name);
+	BuildPart.RowName = FName(*Inv->EquippedItem.Name);
 
 	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("BuildMode"), false);
 	if (!Row || !Row->StaticMesh) return; 
@@ -102,8 +101,14 @@ void UBuildingComponent::Build()
 	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("BuildMode"), false);
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
 	GetWorld()->SpawnActor<AActor>(Row->ActorClass, BuildPreviewMesh->GetComponentLocation(), BuildPreviewMesh->GetComponentRotation(), FActorSpawnParameters());
+	
+	SurvivalCharacter->GetInventoryComponent()->RemoveItem(SurvivalCharacter->GetInventoryComponent()->EquippedItem, true);
+	if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
+	{
+		StopBuildMode();
+	}
+	
 }
 
 

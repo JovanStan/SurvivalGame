@@ -6,6 +6,7 @@
 #include "ItemActionComponent.generated.h"
 
 
+class UBuildingComponent;
 class UNiagaraSystem;
 class UInventoryWidget;
 class ASurvivalPlayerController;
@@ -42,6 +43,8 @@ private:
 	TObjectPtr<UAnimInstance> AnimInstance;
 	UPROPERTY()
 	TObjectPtr<UInventoryComponent> InventoryComponent;
+	UPROPERTY()
+	TObjectPtr<UBuildingComponent> BuildingComponent;
 	
 	
 	bool bCanAttack;

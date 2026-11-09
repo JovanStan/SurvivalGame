@@ -5,6 +5,7 @@
 #include "../../Characters/SurvivalCharacter.h"
 #include "../../Components/InventoryComponent.h"
 #include "../../Player/SurvivalPlayerController.h"
+#include "Components/BuildingComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Runtime/UMG/Public/Components/Button.h"
 #include "Runtime/UMG/Public/Components/Image.h"
@@ -54,13 +55,21 @@ void UItemSlotWidget::OnItemButtonPressed()
 	if (ASurvivalCharacter* PlayerCharacter = Cast<ASurvivalCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 	{
 		PlayerCharacter->GetInventoryComponent()->EquippedItem = Item;
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, FString::Printf(TEXT("Equipped %s"), *Item.Name));
 		PlayerCharacter->EquipItemMesh(Item);
 		SetSelected();
 		if (ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(PlayerCharacter->GetController()))
 		{
 			PC->CloseInventory();
 			PC->GetHUDWidget()->UpdateEquippedItem(Item);
+		}
+		if (PlayerCharacter->GetInventoryComponent()->EquippedItem.Name == "Axe" || PlayerCharacter->GetInventoryComponent()->EquippedItem.Name == "Pickaxe")
+		{
+			PlayerCharacter->GetBuildingComponent()->StopBuildMode();
+		}
+		else
+		{
+			PlayerCharacter->GetBuildingComponent()->StopBuildMode();
+			PlayerCharacter->GetBuildingComponent()->BuildMode();
 		}
 	}
 }

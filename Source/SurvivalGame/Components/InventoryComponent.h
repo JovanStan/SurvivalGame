@@ -25,6 +25,8 @@ public:
 	void AddItem(const FItemData& NewItem);
 	UFUNCTION(BlueprintCallable)
 	void RemoveItem(const FItemData& NewItem, bool bDecreaseOneOnly);
+	
+	int GetItemAmount(const FItemData& ItemData);
 
 protected:
 	virtual void BeginPlay() override;
