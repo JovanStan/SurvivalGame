@@ -1,0 +1,11 @@
+﻿
+1. ItemActionComponent - Make separate logic for Axe and Pickaxe (Axe only for wood, Pickaxe for stone)
+2. Add more items for crafting (more tools, armor, more food)
+3. Add a cooking station
+4. Improve snapping when building structures
+5. Make enum for item types instead of checking string like "Axe" "Pickaxe" ect.
+6. Create animation for going to sleep
+7. Player can trigger drink animation every time
+8. Fix the equipped item widget to update properly
+9. Bed mesh preview is rotated for 180 degrees
+10. 
