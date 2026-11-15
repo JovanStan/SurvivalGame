@@ -108,7 +108,6 @@ void UBuildingComponent::Build()
 	{
 		StopBuildMode();
 	}
-	
 }
 
 

@@ -35,6 +35,40 @@ UStatsWidget* UStatsComponent::GetStatsWidget() const
 	return PC ? PC->GetHUDWidget()->StatsWidget.Get() : nullptr;
 }
 
+void UStatsComponent::Eat()
+{
+	AdjustStat(Hunger, 30.f, MaxHunger, true, 0, GetStatsWidget()->HungerBar);
+	if (ConsumeMontage)
+	{
+		OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
+	}
+}
+
+void UStatsComponent::Drink()
+{
+	FVector Start;
+	FRotator ViewRot;
+	OwnerCharacter->GetController()->GetPlayerViewPoint(Start, ViewRot);
+	const FVector End = Start + ViewRot.Vector() * 500.f;
+
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(GetOwner());
+
+	
+	FHitResult HitResult;
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, WaterCollisionChannel, Params))
+	{
+		if (HitResult.bBlockingHit)
+		{
+			AdjustStat(Thirst, 15.f, MaxThirst, true, 0, GetStatsWidget()->ThirstBar);
+			if (ConsumeMontage)
+			{
+				OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
+			}
+		}
+	}
+}
+
 void UStatsComponent::AdjustStat(double& Stat, double Amount, double MaxValue, bool bDamagePlayer, double DamageAmount, UProgressBar* BarWidget)
 {
 	Stat = FMath::Clamp(Stat + Amount, 0.f, MaxValue);

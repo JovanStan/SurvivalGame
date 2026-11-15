@@ -20,7 +20,7 @@ class SURVIVALGAME_API UItemActionComponent : public UActorComponent
 
 public:
 	UItemActionComponent();
-	void AttackAndHarvest();
+	void PrimaryInputAction();
 
 protected:
 	virtual void BeginPlay() override;

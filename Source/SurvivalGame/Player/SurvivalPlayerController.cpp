@@ -150,6 +150,6 @@ void ASurvivalPlayerController::AttackAndHarvest()
 	}
 	else
 	{
-		OwnerCharacter->GetItemActionComponent()->AttackAndHarvest();
+		OwnerCharacter->GetItemActionComponent()->PrimaryInputAction();
 	}
 } 

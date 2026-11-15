@@ -10,6 +10,7 @@
 #include "Engine/DamageEvents.h"
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
+#include "StatsComponent.h"
 
 UItemActionComponent::UItemActionComponent()
 {
@@ -33,7 +34,7 @@ void UItemActionComponent::BeginPlay()
 	}
 }
 
-void UItemActionComponent::AttackAndHarvest()
+void UItemActionComponent::PrimaryInputAction()
 {
 	const ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(SurvivalCharacter->GetController());
 	if (!PC || PC->GetInventoryWidget()) return;
@@ -50,7 +51,23 @@ void UItemActionComponent::AttackAndHarvest()
 			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, AttackAndHarvestMontage);
 		}
 	}
+	else if ((InventoryComponent->EquippedItem.Name == "Banana" || InventoryComponent->EquippedItem.Name == "Meat") 
+		&& SurvivalCharacter->GetStatsComponent()->GetHunger() < SurvivalCharacter->GetStatsComponent()->GetMaxHunger())
+	{
+		SurvivalCharacter->GetStatsComponent()->Eat();
+		SurvivalCharacter->GetInventoryComponent()->RemoveItem(InventoryComponent->EquippedItem, true);
+		if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
+		{
+			SurvivalCharacter->GetInventoryComponent()->EquippedItem = FItemData();
+			SurvivalCharacter->EquipItemMesh(FItemData());
+		}
+	}
+	else
+	{
+		SurvivalCharacter->GetStatsComponent()->Drink();
+	}
 }
+
 
 void UItemActionComponent::OnAttackAndHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
@@ -68,6 +85,7 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 	
 	if (HitResult.bBlockingHit)
 	{
+	
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, HitResult.ImpactPoint);
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, HitResult.ImpactPoint);
 		

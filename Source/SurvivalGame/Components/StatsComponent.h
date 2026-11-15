@@ -28,6 +28,13 @@ public:
 	bool bRegenStamina = true;
 	void AdjustStat(UPARAM(ref) double& Stat, double Amount = 0.05f, double MaxValue = 100.f, bool bDamagePlayer = false, double DamageAmount = 0.05f, UProgressBar* BarWidget = nullptr);
 	UStatsWidget* GetStatsWidget() const;
+	
+	void Eat();
+	void Drink();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> ConsumeMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TEnumAsByte<ECollisionChannel> WaterCollisionChannel;
 
 protected:
 	virtual void BeginPlay() override;
