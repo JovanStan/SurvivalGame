@@ -21,4 +21,6 @@ class SURVIVALGAME_API IInteract
 public:
 	UFUNCTION(BlueprintNativeEvent)
 	void PickupItem(FItemData& Item, bool& bCanPickup);
+	UFUNCTION(BlueprintNativeEvent)
+	void Interact();
 };

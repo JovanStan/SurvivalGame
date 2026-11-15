@@ -55,6 +55,13 @@ ASurvivalCharacter::ASurvivalCharacter()
 	CharacterViewport->SetupAttachment(GetCapsuleComponent());
 }
 
+void ASurvivalCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	CharacterViewport->ShowOnlyActorComponents(this, true);
+}
+
 void ASurvivalCharacter::StartSprint()
 {
 	if (StatsComponent->GetStamina() <= 0) return;
@@ -105,8 +112,11 @@ void ASurvivalCharacter::Interact()
 			{
 				InventoryComponent->AddItem(PickedItem);
 				HitResult.GetActor()->Destroy();
+				return;
 			}
 		}
+		
+		IInteract::Execute_Interact(HitResult.GetActor()); 
 	}
 }
 
@@ -115,11 +125,5 @@ void ASurvivalCharacter::HarvestItem_Implementation(FItemData Item)
 	InventoryComponent->AddItem(Item);
 }
 
-void ASurvivalCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	CharacterViewport->ShowOnlyActorComponents(this, true);
-}
 
 
