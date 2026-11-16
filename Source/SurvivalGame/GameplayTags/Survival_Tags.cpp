@@ -19,6 +19,12 @@ namespace Survival_Tags
 		UE_DEFINE_GAMEPLAY_TAG(Banana, "SurvivalTags.Food.Banana")
 		UE_DEFINE_GAMEPLAY_TAG(Meat, "SurvivalTags.Food.Meat")
 	}
+	
+	namespace Drink
+	{
+		UE_DEFINE_GAMEPLAY_TAG(Coconut, "SurvivalTags.Drink.Coconut")
+		UE_DEFINE_GAMEPLAY_TAG(WaterBottle, "SurvivalTags.Drink.WaterBottle")
+	}
 
 	namespace Construction
 	{

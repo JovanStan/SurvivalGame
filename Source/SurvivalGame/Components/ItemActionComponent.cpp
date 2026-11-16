@@ -56,16 +56,22 @@ void UItemActionComponent::PrimaryInputAction()
 		&& SurvivalCharacter->GetStatsComponent()->GetHunger() < SurvivalCharacter->GetStatsComponent()->GetMaxHunger())
 	{
 		SurvivalCharacter->GetStatsComponent()->Eat();
-		SurvivalCharacter->GetInventoryComponent()->RemoveItem(InventoryComponent->EquippedItem, true);
-		if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
-		{
-			SurvivalCharacter->GetInventoryComponent()->EquippedItem = FItemData();
-			SurvivalCharacter->EquipItemMesh(FItemData());
-		}
+		RemoveEquippedItemAndUpdate();
 	}
-	else
+	else if (InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Drink::Coconut || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Drink::WaterBottle)
 	{
 		SurvivalCharacter->GetStatsComponent()->Drink();
+		RemoveEquippedItemAndUpdate();
+	}
+}
+
+void UItemActionComponent::RemoveEquippedItemAndUpdate()
+{
+	SurvivalCharacter->GetInventoryComponent()->RemoveItem(InventoryComponent->EquippedItem, true);
+	if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
+	{
+		SurvivalCharacter->GetInventoryComponent()->EquippedItem = FItemData();
+		SurvivalCharacter->EquipItemMesh(FItemData());
 	}
 }
 

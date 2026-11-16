@@ -38,5 +38,5 @@ private:
 	bool bRandomItem;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-	TArray<FName> PossibleRows = { TEXT("Wood"), TEXT("Stone"), TEXT("Banana") };
+	TArray<FName> PossibleRows = { TEXT("Wood"), TEXT("Stone"), TEXT("Banana"), TEXT("Coconut") };
 };

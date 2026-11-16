@@ -5,7 +5,7 @@
 4. Improve snapping when building structures
 
 6. Create animation for going to sleep
-7. Player can trigger drink animation every time (Create item like "Water Bottle" or Coconut for drinking)
+
 8. Fix the equipped item widget to update properly
 9. Bed mesh preview is rotated for 180 degrees
 10. Add tooltip text for craftable items

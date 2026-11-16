@@ -46,26 +46,10 @@ void UStatsComponent::Eat()
 
 void UStatsComponent::Drink()
 {
-	FVector Start;
-	FRotator ViewRot;
-	OwnerCharacter->GetController()->GetPlayerViewPoint(Start, ViewRot);
-	const FVector End = Start + ViewRot.Vector() * 500.f;
-
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor(GetOwner());
-
-	
-	FHitResult HitResult;
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, WaterCollisionChannel, Params))
+	AdjustStat(Thirst, 15.f, MaxThirst, true, 0, GetStatsWidget()->ThirstBar);
+	if (ConsumeMontage)
 	{
-		if (HitResult.bBlockingHit)
-		{
-			AdjustStat(Thirst, 15.f, MaxThirst, true, 0, GetStatsWidget()->ThirstBar);
-			if (ConsumeMontage)
-			{
-				OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
-			}
-		}
+		OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
 	}
 }
 
