@@ -42,23 +42,23 @@ void UItemActionComponent::PrimaryInputAction()
 	
 	if (InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Axe || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Pickaxe)
 	{
-		if (bCanAttack && SurvivalCharacter && AttackAndHarvestMontage)
+		if (bCanAttack && SurvivalCharacter && HarvestMontage)
 		{
-			AnimInstance->Montage_Play(AttackAndHarvestMontage);
+			AnimInstance->Montage_Play(HarvestMontage);
 			bCanAttack = false;
 		
 			FOnMontageEnded EndDelegate;
-			EndDelegate.BindUObject(this, &ThisClass::OnAttackAndHarvestMontageEnded);
-			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, AttackAndHarvestMontage);
+			EndDelegate.BindUObject(this, &ThisClass::OnHarvestMontageEnded);
+			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, HarvestMontage);
 		}
 	}
-	else if ((InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Food::Banana || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Food::Meat) 
+	else if (EatingTags.HasTagExact(InventoryComponent->EquippedItem.ItemTag) 
 		&& SurvivalCharacter->GetStatsComponent()->GetHunger() < SurvivalCharacter->GetStatsComponent()->GetMaxHunger())
 	{
 		SurvivalCharacter->GetStatsComponent()->Eat();
 		RemoveEquippedItemAndUpdate();
 	}
-	else if (InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Drink::Coconut || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Drink::WaterBottle)
+	else if (DrinkingTags.HasTagExact(InventoryComponent->EquippedItem.ItemTag))
 	{
 		SurvivalCharacter->GetStatsComponent()->Drink();
 		RemoveEquippedItemAndUpdate();
@@ -76,7 +76,7 @@ void UItemActionComponent::RemoveEquippedItemAndUpdate()
 }
 
 
-void UItemActionComponent::OnAttackAndHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+void UItemActionComponent::OnHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	bCanAttack = true;
 }
@@ -92,19 +92,22 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 	
 	if (HitResult.bBlockingHit)
 	{
-		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, HitResult.ImpactPoint);
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, HitResult.ImpactPoint);
-		
-		if (HitResult.GetComponent()->Implements<UFoliageInterface>())
+		// This is for chopping a tree, because trees are Foliage Instanced Static Meshes
+		if (HitResult.GetComponent()->Implements<UFoliageInterface>() && InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Axe)
 		{
 			IFoliageInterface::Execute_Chop(HitResult.GetComponent(), 10.f, HitResult);
+			if (TreeHitSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), TreeHitSound, HitResult.ImpactPoint);
+			if (TreeHitEffect) UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TreeHitEffect, HitResult.ImpactPoint);
 			return;
 		}
 		
-		if (HitResult.GetActor())
+		// This is for mining rock, because rocks are Resource items (can be done the same for a tree, but it's much simpler with foliage static meshes)
+		if (HitResult.GetActor() && InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Pickaxe)
 		{
 			const FDamageEvent DamageEvent;
 			HitResult.GetActor()->TakeDamage(10.f, DamageEvent, SurvivalCharacter->GetController(), SurvivalCharacter);
+			if (RockHitSound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), RockHitSound, HitResult.ImpactPoint);
+			if (RockHitEffect) UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), RockHitEffect, HitResult.ImpactPoint);
 		}
 	}
 }

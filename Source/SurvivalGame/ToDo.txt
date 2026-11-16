@@ -1,6 +1,4 @@
-﻿
-1. ItemActionComponent - Make separate logic for Axe and Pickaxe (Axe only for wood, Pickaxe for stone)
-2. Add more items for crafting (more tools, armor, more food)
+﻿2. Add more items for crafting (more tools, armor, more food)
 3. Add a cooking station
 4. Improve snapping when building structures
 5. Create animation for going to sleep

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Components/ActorComponent.h"
 #include "ItemActionComponent.generated.h"
 
@@ -28,16 +29,29 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<UAnimMontage> AttackAndHarvestMontage;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<USoundBase> HitSound;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<UNiagaraSystem> HitEffect;
+	TObjectPtr<UAnimMontage> HarvestMontage;
 	
-	void OnAttackAndHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<USoundBase> TreeHitSound;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> TreeHitEffect;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<USoundBase> RockHitSound;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> RockHitEffect;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	FGameplayTagContainer EatingTags;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	FGameplayTagContainer DrinkingTags;
+	
+	// For Harvest Montage
+	void OnHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	UFUNCTION()
 	void OnNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& Payload);
 	
+	
+	// References
 	UPROPERTY()
 	TObjectPtr<ASurvivalCharacter> SurvivalCharacter;
 	UPROPERTY()
