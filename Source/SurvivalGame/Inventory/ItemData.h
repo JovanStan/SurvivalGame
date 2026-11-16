@@ -1,6 +1,7 @@
 ﻿
 #pragma once
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Crafting/Recipe.h"
 #include "Engine/DataTable.h"
 #include "ItemData.generated.h"
@@ -12,12 +13,13 @@ struct FItemData : public FTableRowBase
 	GENERATED_BODY()
 	
 	FItemData() = default;
-	FItemData(const FString& InName, int InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft)
+	FItemData(const FString& InName, int InAmount, UStaticMesh* InStaticMesh, UTexture2D* InIcon, bool bInCanCraft, FGameplayTag InItemTag)
 	   : Name(InName)
 	   , Amount(InAmount)
 	   , StaticMesh(InStaticMesh)
 	   , Icon(InIcon)
 	   , bCanCraft(bInCanCraft)
+	   , ItemTag(InItemTag)
 	{}
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -30,6 +32,8 @@ struct FItemData : public FTableRowBase
 	TObjectPtr<UTexture2D> Icon = nullptr;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bCanCraft = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FGameplayTag ItemTag;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FRecipe> ResourcesNeeded;
 };

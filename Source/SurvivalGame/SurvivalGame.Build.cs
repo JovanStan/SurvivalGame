@@ -20,7 +20,8 @@ public class SurvivalGame : ModuleRules
 			"UMG",
 			"Slate",
 			"SlateCore",
-			"Niagara"
+			"Niagara",
+			"GameplayTags"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });

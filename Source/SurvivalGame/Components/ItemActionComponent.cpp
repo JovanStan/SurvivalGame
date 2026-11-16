@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "StatsComponent.h"
+#include "GameplayTags/Survival_Tags.h"
 
 UItemActionComponent::UItemActionComponent()
 {
@@ -39,7 +40,7 @@ void UItemActionComponent::PrimaryInputAction()
 	const ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(SurvivalCharacter->GetController());
 	if (!PC || PC->GetInventoryWidget()) return;
 	
-	if (InventoryComponent->EquippedItem.Name == "Axe" || InventoryComponent->EquippedItem.Name == "Pickaxe")
+	if (InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Axe || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Tools::Pickaxe)
 	{
 		if (bCanAttack && SurvivalCharacter && AttackAndHarvestMontage)
 		{
@@ -51,7 +52,7 @@ void UItemActionComponent::PrimaryInputAction()
 			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, AttackAndHarvestMontage);
 		}
 	}
-	else if ((InventoryComponent->EquippedItem.Name == "Banana" || InventoryComponent->EquippedItem.Name == "Meat") 
+	else if ((InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Food::Banana || InventoryComponent->EquippedItem.ItemTag == Survival_Tags::Food::Meat) 
 		&& SurvivalCharacter->GetStatsComponent()->GetHunger() < SurvivalCharacter->GetStatsComponent()->GetMaxHunger())
 	{
 		SurvivalCharacter->GetStatsComponent()->Eat();
@@ -85,7 +86,6 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 	
 	if (HitResult.bBlockingHit)
 	{
-	
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, HitResult.ImpactPoint);
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, HitResult.ImpactPoint);
 		
