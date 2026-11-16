@@ -46,13 +46,12 @@ void UBuildingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	// 2) Snap to a socket
 	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("Tick"), false);
 	if (!Row) return;
-
+	
 	FHitResult SocketHit;
 	bool bSocketHit = GetWorld()->LineTraceSingleByChannel(SocketHit, Start, End, Row->SocketTraceChannel, Params);
-	if (bSocketHit)
+	if (bSocketHit && Row->bEnableSnap)
 	{
-		const UPrimitiveComponent* SocketComp = SocketHit.GetComponent();
-		if (SocketComp)
+		if (const UPrimitiveComponent* SocketComp = SocketHit.GetComponent())
 		{
 			BuildPreviewMesh->SetWorldLocationAndRotation(SocketComp->GetComponentLocation(),
 				FRotator(0.f, SocketComp->GetComponentRotation().Yaw, 0.f));

@@ -3,8 +3,6 @@
 2. Add more items for crafting (more tools, armor, more food)
 3. Add a cooking station
 4. Improve snapping when building structures
-
-6. Create animation for going to sleep
-
-8. Fix the equipped item widget to update properly
-9. Bed mesh preview is rotated for 180 degrees
+5. Create animation for going to sleep
+6. Fix the equipped item widget to update properly
+7.  Right now when we drink or eat, we always get the same amount of hunger and thirst filled. Make it so that every item has different values.

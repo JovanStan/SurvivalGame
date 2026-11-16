@@ -24,5 +24,7 @@ struct FBuildPart : public FTableRowBase
 	TObjectPtr<UStaticMesh> StaticMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TEnumAsByte<ECollisionChannel> SocketTraceChannel;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bEnableSnap = true;
 };
 
