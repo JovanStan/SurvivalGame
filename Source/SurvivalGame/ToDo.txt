@@ -8,4 +8,3 @@
 
 8. Fix the equipped item widget to update properly
 9. Bed mesh preview is rotated for 180 degrees
-10. Add tooltip text for craftable items

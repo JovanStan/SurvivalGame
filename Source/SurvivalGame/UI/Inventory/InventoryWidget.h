@@ -33,6 +33,7 @@ public:
 	void ShowItemInfo(FItemData ItemHovered, bool bShowAmount);
 	void HideItemInfo();
 	void HandleSlotHovered(const FItemData& ItemHovered);
+	void HandleCraftingSlotHovered(const FItemData& ItemHovered);
 	
 	void DisplayCraftingResources(TArray<FRecipe> Resources, FItemData ItemToCraft);
 	UFUNCTION()

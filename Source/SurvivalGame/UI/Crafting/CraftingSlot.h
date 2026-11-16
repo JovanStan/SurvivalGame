@@ -10,6 +10,8 @@ class UInventoryComponent;
 class UImage;
 class UButton;
 
+DECLARE_DELEGATE_OneParam(FOnCraftingSlotHovered, const FItemData&);
+DECLARE_DELEGATE(FOnCraftingSlotUnhovered);
 
 UCLASS()
 class SURVIVALGAME_API UCraftingSlot : public UUserWidget
@@ -20,6 +22,9 @@ public:
 	virtual void NativeConstruct() override;
 	UFUNCTION(BlueprintCallable)
 	void SetSelected(FLinearColor LinearColor);
+	
+	FOnCraftingSlotHovered OnSlotHovered;
+	FOnCraftingSlotUnhovered OnSlotUnhovered;
 	
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UButton> ItemButton;
@@ -41,4 +46,8 @@ private:
 	
 	UFUNCTION()
 	void ItemButtonPressed();
+	UFUNCTION()
+	void OnCraftingButtonHovered();
+	UFUNCTION()
+	void OnCraftingButtonUnhovered();
 };

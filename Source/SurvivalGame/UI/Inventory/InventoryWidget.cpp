@@ -106,6 +106,8 @@ void UInventoryWidget::UpdateInventory()
 			{
 				UCraftingSlot* CraftingSlot = CreateWidget<UCraftingSlot>(this, CraftingSlotClass);
 				CraftingSlot->SetCraftingItem(Item);
+				CraftingSlot->OnSlotHovered.BindUObject(this, &ThisClass::HandleCraftingSlotHovered);
+				CraftingSlot->OnSlotUnhovered.BindUObject(this, &ThisClass::HideItemInfo);
 				const int32 Row = Index2 / 4;
 				const int32 Column = Index2 % 4;
 				CraftItemsGrid->GridPanel->AddChildToUniformGrid(CraftingSlot, Row, Column);
@@ -118,6 +120,11 @@ void UInventoryWidget::UpdateInventory()
 void UInventoryWidget::HandleSlotHovered(const FItemData& ItemHovered)
 {
 	ShowItemInfo(ItemHovered, true);
+}
+
+void UInventoryWidget::HandleCraftingSlotHovered(const FItemData& ItemHovered)
+{
+	ShowItemInfo(ItemHovered, false);
 }
 
 void UInventoryWidget::DisplayCraftingResources(TArray<FRecipe> Resources, FItemData ItemToCraft)

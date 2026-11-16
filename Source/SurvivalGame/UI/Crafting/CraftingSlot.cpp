@@ -14,6 +14,8 @@ void UCraftingSlot::NativeConstruct()
 	Super::NativeConstruct();
 	
 	ItemButton->OnPressed.AddDynamic(this, &ThisClass::ItemButtonPressed);
+	ItemButton->OnHovered.AddDynamic(this, &ThisClass::OnCraftingButtonHovered);
+	ItemButton->OnUnhovered.AddDynamic(this, &ThisClass::OnCraftingButtonUnhovered);
 	
 	GetWorld()->GetTimerManager().SetTimer(StartDelayTimerHandle, this, &UCraftingSlot::StartDelay, 0.1f, false);
 }
@@ -56,6 +58,16 @@ void UCraftingSlot::ItemButtonPressed()
 	{
 		SurvivalPlayerController->GetInventoryWidget()->DisplayCraftingResources(Item.ResourcesNeeded, Item);
 	}
+}
+
+void UCraftingSlot::OnCraftingButtonHovered()
+{
+	OnSlotHovered.ExecuteIfBound(Item);
+}
+
+void UCraftingSlot::OnCraftingButtonUnhovered()
+{
+	OnSlotUnhovered.ExecuteIfBound();
 }
 
 void UCraftingSlot::SetSelected(const FLinearColor LinearColor)
