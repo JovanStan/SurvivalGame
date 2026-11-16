@@ -52,15 +52,9 @@ void UItemActionComponent::PrimaryInputAction()
 			SurvivalCharacter->GetMesh()->GetAnimInstance()->Montage_SetEndDelegate(EndDelegate, HarvestMontage);
 		}
 	}
-	else if (EatingTags.HasTagExact(InventoryComponent->EquippedItem.ItemTag) 
-		&& SurvivalCharacter->GetStatsComponent()->GetHunger() < SurvivalCharacter->GetStatsComponent()->GetMaxHunger())
+	else if (const FConsumableData* Data = GetConsumableData(InventoryComponent->EquippedItem))
 	{
-		SurvivalCharacter->GetStatsComponent()->Eat();
-		RemoveEquippedItemAndUpdate();
-	}
-	else if (DrinkingTags.HasTagExact(InventoryComponent->EquippedItem.ItemTag))
-	{
-		SurvivalCharacter->GetStatsComponent()->Drink();
+		SurvivalCharacter->GetStatsComponent()->Consume(*Data);
 		RemoveEquippedItemAndUpdate();
 	}
 }
@@ -110,5 +104,11 @@ void UItemActionComponent::OnNotifyBegin(FName NotifyName, const FBranchingPoint
 			if (RockHitEffect) UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), RockHitEffect, HitResult.ImpactPoint);
 		}
 	}
+}
+
+const FConsumableData* UItemActionComponent::GetConsumableData(const FItemData& Item) const
+{
+	if (!ConsumablesDataTable) return nullptr;
+	return ConsumablesDataTable->FindRow<FConsumableData>(FName(*Item.Name), TEXT("GetConsumableData"), false);
 }
 

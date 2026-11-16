@@ -35,22 +35,23 @@ UStatsWidget* UStatsComponent::GetStatsWidget() const
 	return PC ? PC->GetHUDWidget()->StatsWidget.Get() : nullptr;
 }
 
-void UStatsComponent::Eat()
+void UStatsComponent::Consume(const FConsumableData& ConsumeData)
 {
-	AdjustStat(Hunger, 30.f, MaxHunger, true, 0, GetStatsWidget()->HungerBar);
-	if (ConsumeMontage)
-	{
-		OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
-	}
-}
+	const UStatsWidget* Widget = GetStatsWidget();
 
-void UStatsComponent::Drink()
-{
-	AdjustStat(Thirst, 15.f, MaxThirst, true, 0, GetStatsWidget()->ThirstBar);
-	if (ConsumeMontage)
-	{
-		OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
-	}
+	if (ConsumeData.HungerRestore != 0.f)
+		AdjustStat(Hunger, ConsumeData.HungerRestore, MaxHunger, false, 0.f, Widget ? Widget->HungerBar : nullptr);
+
+	if (ConsumeData.ThirstRestore != 0.f)
+		AdjustStat(Thirst, ConsumeData.ThirstRestore, MaxThirst, false, 0.f, Widget ? Widget->ThirstBar : nullptr);
+
+	if (ConsumeData.HealthRestore != 0.f)
+		AdjustStat(Health, ConsumeData.HealthRestore, MaxHealth, false, 0.f, Widget ? Widget->HealthBar : nullptr);
+
+	if (ConsumeData.StaminaRestore != 0.f)
+		AdjustStat(Stamina, ConsumeData.StaminaRestore, MaxStamina, false, 0.f, Widget ? Widget->StaminaBar : nullptr);
+
+	OwnerCharacter->GetMesh()->GetAnimInstance()->Montage_Play(ConsumeMontage);
 }
 
 void UStatsComponent::AdjustStat(double& Stat, double Amount, double MaxValue, bool bDamagePlayer, double DamageAmount, UProgressBar* BarWidget)

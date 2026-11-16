@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Inventory/ItemData.h"
 #include "StatsComponent.generated.h"
 
 class ASurvivalPlayerController;
@@ -29,8 +30,7 @@ public:
 	void AdjustStat(UPARAM(ref) double& Stat, double Amount = 0.05f, double MaxValue = 100.f, bool bDamagePlayer = false, double DamageAmount = 0.05f, UProgressBar* BarWidget = nullptr);
 	UStatsWidget* GetStatsWidget() const;
 	
-	void Eat();
-	void Drink();
+	void Consume(const FConsumableData& ConsumeData);
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> ConsumeMontage;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
@@ -48,22 +48,22 @@ private:
 	void UpdateStats();
 	
 	// Main Character Stats
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double Health;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double MaxHealth = 100.f;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double Hunger;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double MaxHunger = 100.f;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double Thirst;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double MaxThirst = 100.f;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double Stamina;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	double MaxStamina = 100.f;

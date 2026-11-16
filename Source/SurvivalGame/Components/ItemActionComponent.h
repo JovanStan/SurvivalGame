@@ -7,6 +7,8 @@
 #include "ItemActionComponent.generated.h"
 
 
+struct FItemData;
+struct FConsumableData;
 class UBuildingComponent;
 class UNiagaraSystem;
 class UInventoryWidget;
@@ -40,11 +42,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UNiagaraSystem> RockHitEffect;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	FGameplayTagContainer EatingTags;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	FGameplayTagContainer DrinkingTags;
-	
+	UPROPERTY(EditAnywhere, Category = "Consumables")
+	TObjectPtr<UDataTable> ConsumablesDataTable;
+
 	// For Harvest Montage
 	void OnHarvestMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 	UFUNCTION()
@@ -61,6 +61,6 @@ private:
 	UPROPERTY()
 	TObjectPtr<UBuildingComponent> BuildingComponent;
 	
-	
 	bool bCanAttack;
+	const FConsumableData* GetConsumableData(const FItemData& Item) const;
 };

@@ -6,6 +6,23 @@
 #include "Engine/DataTable.h"
 #include "ItemData.generated.h"
 
+USTRUCT(BlueprintType)
+struct FConsumableData : public FTableRowBase
+{
+	GENERATED_BODY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumable")
+	float HungerRestore = 0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumable")
+	float ThirstRestore = 0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumable")
+	float HealthRestore = 0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumable")
+	float StaminaRestore = 0.f;
+
+	// Optional extras
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Consumable")
+	TObjectPtr<USoundBase> UseSound = nullptr;
+};
 
 USTRUCT(BlueprintType)
 struct FItemData : public FTableRowBase

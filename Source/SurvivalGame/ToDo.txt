@@ -3,4 +3,3 @@
 4. Improve snapping when building structures
 5. Create animation for going to sleep
 6. Fix the equipped item widget to update properly
-7.  Right now when we drink or eat, we always get the same amount of hunger and thirst filled. Make it so that every item has different values.
