@@ -60,7 +60,6 @@ void UItemSlotWidget::OnItemButtonPressed()
 		if (ASurvivalPlayerController* PC = Cast<ASurvivalPlayerController>(PlayerCharacter->GetController()))
 		{
 			PC->CloseInventory();
-			PC->GetHUDWidget()->UpdateEquippedItem(Item);
 		}
 		if (PlayerCharacter->GetInventoryComponent()->EquippedItem.Name == "Axe" || PlayerCharacter->GetInventoryComponent()->EquippedItem.Name == "Pickaxe")
 		{

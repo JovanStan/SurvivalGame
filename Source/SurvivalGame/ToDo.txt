@@ -2,4 +2,3 @@
 3. Add a cooking station
 4. Improve snapping when building structures
 5. Create animation for going to sleep
-6. Fix the equipped item widget to update properly

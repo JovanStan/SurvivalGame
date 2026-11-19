@@ -6,6 +6,8 @@
 #include "HUDWidget.generated.h"
 
 
+class ASurvivalCharacter;
+class ASurvivalPlayerController;
 struct FItemData;
 class UTextBlock;
 class UImage;
@@ -17,6 +19,10 @@ class SURVIVALGAME_API UHUDWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	
+	
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UStatsWidget> StatsWidget;
 	UPROPERTY(meta=(BindWidget), BlueprintReadOnly)
@@ -28,4 +34,8 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void AddItemNotifications(const FString& ItemName, UTexture2D* ItemIcon, int32 ItemAmount);
+	
+private:
+	UPROPERTY()
+	TObjectPtr<ASurvivalCharacter> SurvivalCharacter;
 };
