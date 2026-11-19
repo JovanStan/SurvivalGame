@@ -32,6 +32,7 @@ namespace Survival_Tags
 		UE_DEFINE_GAMEPLAY_TAG(Wall, "SurvivalTags.Construction.Wall")
 		UE_DEFINE_GAMEPLAY_TAG(Door, "SurvivalTags.Construction.Door")
 		UE_DEFINE_GAMEPLAY_TAG(Window, "SurvivalTags.Construction.Window")
-		 UE_DEFINE_GAMEPLAY_TAG(Bed, "SurvivalTags.Construction.Bed")
+		UE_DEFINE_GAMEPLAY_TAG(Bed, "SurvivalTags.Construction.Bed")
+		UE_DEFINE_GAMEPLAY_TAG(CookingStation, "SurvivalTags.Construction.CookingStation")
 	}
 }
