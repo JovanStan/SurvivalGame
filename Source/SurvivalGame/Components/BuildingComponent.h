@@ -17,11 +17,6 @@ public:
 	UBuildingComponent();
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
-	UPROPERTY(EditAnywhere, Category = "Building")
-	float ForwardOffset = 50.f;
-	UPROPERTY(EditAnywhere, Category = "Building")
-	float UpOffset = 20.f;
-	
 	void Build();
 	void BuildMode();
 	void StopBuildMode();

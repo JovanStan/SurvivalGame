@@ -4,6 +4,7 @@
 #include "../Player/SurvivalPlayerController.h"
 #include "../UI/HUDWidget.h"
 #include "Crafting/Recipe.h"
+#include "GameplayTags/Survival_Tags.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -18,6 +19,8 @@ void UInventoryComponent::BeginPlay()
 	Super::BeginPlay();
 	SurvivalPlayerController = Cast<ASurvivalPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
+	AddItem(FItemData("Wood", 1000, nullptr, nullptr, false, Survival_Tags::Resources::Wood));
+	AddItem(FItemData("Stone", 1000, nullptr, nullptr, false, Survival_Tags::Resources::Stone));
 }
 
 bool UInventoryComponent::CanCraftItem(FItemData ItemData)

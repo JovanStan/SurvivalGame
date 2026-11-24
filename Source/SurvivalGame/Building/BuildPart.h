@@ -26,5 +26,9 @@ struct FBuildPart : public FTableRowBase
 	TEnumAsByte<ECollisionChannel> SocketTraceChannel;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bEnableSnap = true;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ForwardOffset;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float UpOffset;
 };
 

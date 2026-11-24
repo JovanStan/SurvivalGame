@@ -35,18 +35,18 @@ void UBuildingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 	const FRotator YawOnly(0.f, ViewRot.Yaw, 0.f);
 
+	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("Tick"), false);
+	if (!Row) return;
+	
 	// 1) Free placement
 	FHitResult GroundHit;
 	if (GetWorld()->LineTraceSingleByChannel(GroundHit, Start, End, ECC_Visibility, Params))
 	{
-		const FVector Offset = YawOnly.Vector() * ForwardOffset + FVector::UpVector * UpOffset;
+		const FVector Offset = YawOnly.Vector() * Row->ForwardOffset + FVector::UpVector * Row->UpOffset;
 		BuildPreviewMesh->SetWorldLocationAndRotation(GroundHit.Location + Offset, YawOnly);
 	}
 
 	// 2) Snap to a socket
-	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("Tick"), false);
-	if (!Row) return;
-	
 	FHitResult SocketHit;
 	bool bSocketHit = GetWorld()->LineTraceSingleByChannel(SocketHit, Start, End, Row->SocketTraceChannel, Params);
 	if (bSocketHit && Row->bEnableSnap)
@@ -100,7 +100,7 @@ void UBuildingComponent::Build()
 	const FBuildPart* Row = BuildPartsDataTable->FindRow<FBuildPart>(BuildPart.RowName, TEXT("BuildMode"), false);
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	GetWorld()->SpawnActor<AActor>(Row->ActorClass, BuildPreviewMesh->GetComponentLocation(), BuildPreviewMesh->GetComponentRotation(), FActorSpawnParameters());
+	GetWorld()->SpawnActor<AActor>(Row->ActorClass, BuildPreviewMesh->GetComponentLocation() - FVector(0.f, 0.f, Row->UpOffset), BuildPreviewMesh->GetComponentRotation(), FActorSpawnParameters());
 	
 	SurvivalCharacter->GetInventoryComponent()->RemoveItem(SurvivalCharacter->GetInventoryComponent()->EquippedItem, true);
 	if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)

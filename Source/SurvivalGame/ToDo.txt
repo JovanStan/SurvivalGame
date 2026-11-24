@@ -2,5 +2,3 @@
 3. Implemented cooing station
 4. Improve snapping when building structures
 5. Create animation for going to sleep
-6. Add crosshair to the screen
-7. Add an offset for every item that can be crafted and placed, right now it's just a random offset for every item

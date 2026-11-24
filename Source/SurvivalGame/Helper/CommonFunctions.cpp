@@ -18,6 +18,6 @@ bool UCommonFunctions::DoSphereTraceForObjects(ASurvivalCharacter* SurvivalChara
 	ActorsToIgnore.Add(SurvivalCharacter);
 	
 	return UKismetSystemLibrary::SphereTraceSingleForObjects(SurvivalCharacter, Start, 
-		End, 20.f, ObjectTypes, 
+		End, 10.f, ObjectTypes, 
 		false, ActorsToIgnore, EDrawDebugTrace::None, HitResult, true);
 }
