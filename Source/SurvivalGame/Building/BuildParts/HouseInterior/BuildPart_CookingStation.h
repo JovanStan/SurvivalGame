@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "../BuildPart_Parent.h"
 #include "../../../Interfaces/Interact.h"
+#include "../../../Inventory/ItemData.h"
 #include "BuildPart_CookingStation.generated.h"
 
 class UNiagaraComponent;
@@ -32,4 +33,16 @@ private:
 	TObjectPtr<USphereComponent> SphereComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UTextRenderComponent> TextRender;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UStaticMeshComponent> CookingItemMesh;
+	
+	FTimerHandle CookingTimer;
+	UFUNCTION()
+	void CookingFinished();
+	
+	bool bCooking = false;
+	bool bCookingDone = false;
+	
+	FItemData CookedItemData;
 };

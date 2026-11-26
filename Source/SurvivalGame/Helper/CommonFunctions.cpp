@@ -2,6 +2,7 @@
 #include "CommonFunctions.h"
 
 #include "../Characters/SurvivalCharacter.h"
+#include "Components/InventoryComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 bool UCommonFunctions::DoSphereTraceForObjects(ASurvivalCharacter* SurvivalCharacter, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, FHitResult& HitResult)
@@ -20,4 +21,14 @@ bool UCommonFunctions::DoSphereTraceForObjects(ASurvivalCharacter* SurvivalChara
 	return UKismetSystemLibrary::SphereTraceSingleForObjects(SurvivalCharacter, Start, 
 		End, 10.f, ObjectTypes, 
 		false, ActorsToIgnore, EDrawDebugTrace::None, HitResult, true);
+}
+
+void UCommonFunctions::RemoveEquippedItemAndUpdate(ASurvivalCharacter* SurvivalCharacter)
+{
+	SurvivalCharacter->GetInventoryComponent()->RemoveItem(SurvivalCharacter->GetInventoryComponent()->EquippedItem, true);
+	if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
+	{
+		SurvivalCharacter->GetInventoryComponent()->EquippedItem = FItemData();
+		SurvivalCharacter->EquipItemMesh(FItemData());
+	}
 }

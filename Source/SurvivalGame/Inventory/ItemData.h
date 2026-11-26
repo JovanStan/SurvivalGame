@@ -53,4 +53,8 @@ struct FItemData : public FTableRowBase
 	FGameplayTag ItemTag;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FRecipe> ResourcesNeeded;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TOptional<float> CookingTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TOptional<FDataTableRowHandle> CookedItem;
 };

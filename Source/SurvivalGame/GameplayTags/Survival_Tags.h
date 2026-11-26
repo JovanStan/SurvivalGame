@@ -25,6 +25,11 @@ namespace Survival_Tags
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Meat);
 	}
 	
+	namespace CookedFood
+	{
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(CookedMeat);
+	}
+	
 	namespace Drink
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Coconut);

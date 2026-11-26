@@ -55,17 +55,7 @@ void UItemActionComponent::PrimaryInputAction()
 	else if (const FConsumableData* Data = GetConsumableData(InventoryComponent->EquippedItem))
 	{
 		SurvivalCharacter->GetStatsComponent()->Consume(*Data);
-		RemoveEquippedItemAndUpdate();
-	}
-}
-
-void UItemActionComponent::RemoveEquippedItemAndUpdate()
-{
-	SurvivalCharacter->GetInventoryComponent()->RemoveItem(InventoryComponent->EquippedItem, true);
-	if (SurvivalCharacter->GetInventoryComponent()->GetItemAmount(SurvivalCharacter->GetInventoryComponent()->EquippedItem) <= 0)
-	{
-		SurvivalCharacter->GetInventoryComponent()->EquippedItem = FItemData();
-		SurvivalCharacter->EquipItemMesh(FItemData());
+		UCommonFunctions::RemoveEquippedItemAndUpdate(SurvivalCharacter);
 	}
 }
 

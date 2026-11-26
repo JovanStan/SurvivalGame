@@ -15,4 +15,5 @@ class SURVIVALGAME_API UCommonFunctions : public UBlueprintFunctionLibrary
 	
 public:
 	static bool DoSphereTraceForObjects(ASurvivalCharacter* SurvivalCharacter, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, FHitResult& HitResult);
+	static void RemoveEquippedItemAndUpdate(ASurvivalCharacter* SurvivalCharacter);
 };

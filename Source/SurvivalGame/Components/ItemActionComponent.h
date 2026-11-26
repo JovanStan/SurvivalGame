@@ -27,7 +27,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void RemoveEquippedItemAndUpdate();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
