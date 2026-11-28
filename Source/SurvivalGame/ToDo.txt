@@ -1,4 +1,2 @@
 ﻿2. Add more items for crafting (more tools, armor, more food)
-3. Implement cooking station
 4. Improve snapping when building structures
-5. Create animation for going to sleep

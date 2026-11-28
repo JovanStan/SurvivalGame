@@ -24,6 +24,9 @@ protected:
 	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 	
 	virtual void Interact_Implementation() override;
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void SleepAnimation();
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))

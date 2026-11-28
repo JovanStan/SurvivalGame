@@ -64,19 +64,25 @@ void ABuildPart_Bed::NotifyActorEndOverlap(AActor* OtherActor)
 
 void ABuildPart_Bed::Interact_Implementation()
 {
-	AActor* SunActor = UGameplayStatics::GetActorOfClass(GetWorld(), ADirectionalLight::StaticClass());
-	if (!SunActor) return;
-
-	USunRotation* SunRotation = SunActor->FindComponentByClass<USunRotation>();
-	if (!SunRotation) return;
-
-	SunRotation->AddHours(1);
+	SleepAnimation();
 	
 	GetWorld()->GetTimerManager().SetTimer(SleepTimer, this, &ABuildPart_Bed::SleepFinished, SleepTime, false);
 	if (ASurvivalPlayerController* PlayerController = Cast<ASurvivalPlayerController>(GetWorld()->GetFirstPlayerController()))
 	{
 		PlayerController->DisableInput(PlayerController);
 	}
+}
+
+void ABuildPart_Bed::SleepFinished()
+{
+	AActor* SunActor = UGameplayStatics::GetActorOfClass(GetWorld(), ADirectionalLight::StaticClass());
+	if (!SunActor) return;
+
+	USunRotation* SunRotation = SunActor->FindComponentByClass<USunRotation>();
+	if (!SunRotation) return;
+	
+	SunRotation->AddHours(1);
+	
 	if (const ASurvivalCharacter* SurvivalCharacter =  Cast<ASurvivalCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)))
 	{
 		if (UStatsComponent* StatsComponent = SurvivalCharacter->GetStatsComponent())
@@ -85,13 +91,10 @@ void ABuildPart_Bed::Interact_Implementation()
 				StatsComponent->GetMaxHealth(), StatsComponent->GetMaxHealth(), false, 0, StatsComponent->GetStatsWidget()->HealthBar);
 		}
 	}
-}
-
-void ABuildPart_Bed::SleepFinished()
-{
-	if (ASurvivalPlayerController* PlayerController = Cast<ASurvivalPlayerController>(GetWorld()->GetFirstPlayerController()))
+	
+	/*if (ASurvivalPlayerController* PlayerController = Cast<ASurvivalPlayerController>(GetWorld()->GetFirstPlayerController()))
 	{
 		PlayerController->EnableInput(PlayerController);
-	}
+	}*/
 	GetWorld()->GetTimerManager().ClearTimer(SleepTimer);
 }
